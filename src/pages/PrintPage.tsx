@@ -37,8 +37,17 @@ export function PrintPage() {
   const [error, setError] = useState<string | null>(null);
   useEffect(() => {
     try {
-      const storedPatients = sessionStorage.getItem('printablePatients');
-      const storedTemplate = sessionStorage.getItem('labelTemplate');
+      const urlParams = new URLSearchParams(window.location.search);
+const dataParam = urlParams.get('data');
+const templateParam = urlParams.get('template');
+
+const storedPatients = dataParam
+  ? decodeURIComponent(dataParam)
+  : sessionStorage.getItem('printablePatients');
+const storedTemplate = templateParam
+  ? decodeURIComponent(templateParam)
+  : sessionStorage.getItem('labelTemplate');
+      
       if (storedPatients && storedTemplate) {
         const parsedPatients = JSON.parse(storedPatients);
         if (Array.isArray(parsedPatients) && parsedPatients.length > 0) {

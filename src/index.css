@@ -165,52 +165,33 @@
   }
 }
 /* Print-specific styles */
-@media print {
-  body {
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
-  /* Hide everything except the label container */
-  body * {
-    visibility: hidden;
-  }
-  .label-container, .label-container * {
-    visibility: visible;
-  }
-  .label-container {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-  }
-  @page {
-    size: 50mm 30mm landscape;
-    margin: 0;
-  }
-  .label {
-    width: 50mm;
-    height: 30mm;
-    padding: 2mm;
-    box-sizing: border-box;
-    overflow: hidden;
-    page-break-after: always;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    font-family: sans-serif;
-    color: #000;
-  }
-  .label-content {
-    font-size: 8pt; /* Adjust font size for label */
-    line-height: 1.4;
-    white-space: pre-wrap; /* Preserve newlines and spaces from template */
-    word-break: break-word; /* Prevent long strings from overflowing */
-  }
-  .label-content p {
-    margin: 0;
-    padding: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-}
+ @page {
+          size: 5cm 3cm landcape;
+          margin: 0;
+        }
+        @media print {
+          html, body {
+            margin: 0;
+            padding: 0;
+          }
+          .label-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+          }
+          .label {
+            width: 5cm;
+            height: 3cm;
+            border: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            page-break-before: always; /* start a new page for every label */
+          }
+          .label-content {
+            text-align: left;
+            font-size: 10pt;
+            padding: 0.2cm;
+          }
+        }

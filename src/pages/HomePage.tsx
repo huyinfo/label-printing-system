@@ -74,7 +74,17 @@ export function HomePage() {
       try {
         sessionStorage.setItem('printablePatients', JSON.stringify(printablePatients));
         sessionStorage.setItem('labelTemplate', labelTemplate);
-        const printWindow = window.open('/print', '_blank');
+        try {
+  const printablePatients = getPrintablePatients();
+  if (printablePatients.length > 0) {
+    const data = encodeURIComponent(JSON.stringify(printablePatients));
+    const template = encodeURIComponent(labelTemplate);
+    window.open(`${window.location.origin}/print?data=${data}&template=${template}`, '_blank');
+  }
+} catch (error) {
+  toast.error("Failed to prepare print data.", { description: "The selected data might be too large to process." });
+}
+
         if (!printWindow) {
           toast.error("Could not open print window.", { description: "Please disable your pop-up blocker and try again." });
         }
@@ -112,7 +122,7 @@ export function HomePage() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="py-8 md:py-10 lg:py-12">
             <header className="text-center mb-12">
-              <h1 className="text-4xl md:text-5xl font-bold tracking-tight">LabelFlow</h1>
+              <h1 className="text-4xl md:text-5xl font-bold tracking-tight">Label Printing</h1>
               <p className="mt-3 max-w-2xl mx-auto text-lg text-muted-foreground">
                 Import patient data and print 50x30mm labels with ease.
               </p>
@@ -341,7 +351,7 @@ export function HomePage() {
               </AnimatePresence>
             </main>
             <footer className="text-center mt-16 text-sm text-muted-foreground">
-              <p>Built with ��️ at Cloudflare</p>
+              <p>Care1 Executive Health Care Center</p>
             </footer>
           </div>
         </div>
